@@ -52,16 +52,20 @@ public class Romania_Problem_Assignment
         }
     
         public void addEdge(int source, int destination, int weight) {
-            
+            // creates object city_edge each time method is called
             Edge city_edge = new Edge(source, destination, weight);
+            
+            // makes adds city_edge(source, dest, weight) to each adjacency list [0-19]
             adjacencyLists[source].add(city_edge);
             
         }
+        
         
         public void printGraph(){
             
             for (int i = 0; i < vertices ; i++) {
                 
+                // list is a linked list of type Edge(source,dest,weight)
                 LinkedList<Edge> list = adjacencyLists[i];
                 
                 for (int j = 0; j < list.size(); j++) 
