@@ -32,7 +32,7 @@ public class Romania_Problem_Assignment
         // holds the number of vertices (city nodes)
         int vertices; 
         // Linked list contains the Adjacency list of EACH city
-        LinkedList<Edge> adjacencyLists[] ;
+        LinkedList<Edge> adjacencyLists[];
         
         // Graph Constructor
         Graph(int numOfCities)
@@ -108,16 +108,17 @@ public class Romania_Problem_Assignment
         // Create Graph Object
         Graph graph = new Graph(numOfCities);
            
-        // Arad
-        graph.addEdge(0, 15, 140);
-        graph.addEdge(0, 16, 118);
-        graph.addEdge(0, 19, 75);
             
         // Bucharest
-        graph.addEdge(1, 5, 211);
-        graph.addEdge(1, 6, 90);
-        graph.addEdge(1, 13, 101);
-        graph.addEdge(1, 17, 85);
+        graph.addEdge(0, 5, 211);
+        graph.addEdge(0, 6, 90);
+        graph.addEdge(0, 13, 101);
+        graph.addEdge(0, 17, 85);
+        
+        // Arad
+        graph.addEdge(1, 15, 140);
+        graph.addEdge(1, 16, 118);
+        graph.addEdge(1, 19, 75);
             
         // Craiova
         graph.addEdge(2, 3, 120);
@@ -197,7 +198,13 @@ public class Romania_Problem_Assignment
         // print graph
         graph.printGraph();
         
+        // User choice
+        System.out.println("Destination wil always be Bucharest (City 1)");
+        System.out.println("Please enter your starting city (0-19): ");
+        Scanner sc = new Scanner(System.in);
+        int starting_city = sc.nextInt();
         
+
         }
 
     
