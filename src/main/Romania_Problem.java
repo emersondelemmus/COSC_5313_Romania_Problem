@@ -30,7 +30,13 @@ public class Romania_Problem
     int steps = 0;
     int numCity;
     
+    
+    
+    boolean Destination_Bucharest = false;
 
+    
+    
+    
     public Romania_Problem(int numCity)
     {
         this.numCity = numCity;
@@ -113,7 +119,132 @@ public class Romania_Problem
             }
         }
     }
+    
+    public void DFS( int rando )
+    {
+        boolean visited[] = new boolean [numCity];
+        Stack<Integer> stack = new Stack<Integer>();
+        
+    
+        for (int startIndex = rando; startIndex < numCity; startIndex++)
+        {
+            if (visited[startIndex] == false) 
+            {
+                stack.push(startIndex);
+                visited[startIndex] = true;
+                
+                while (stack.isEmpty() == false)
+                {
+                    int nodeIndex = stack.pop();
+                    System.out.print(nodeIndex + " ");
+                    LinkedList<Integer> nodeList = neighbours[nodeIndex];
+                
+                    for (int i = 0; i < nodeList.size(); i++) 
+                    {
+                        int dest = nodeList.get(i);
+                        if (visited[dest] == false) 
+                        {
+                            stack.push(dest);
+                            visited[dest] = true;
+                            if (dest == 0 )
+                            {
+                                System.out.print(dest + " ");
+                                System.out.println();
+                                System.out.println("You have reached Bucharest");                                       
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    //after much trial and error this is nearly identical to DFS bc it RUNS at least
+    //TEST CITY = 8 (Lugoj)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void IDS ( int rando ) 
+    {
+        // Iterates depth from 0 -> max value held by an int data type (essentially infinity for our problem)
+        for (int depth = 0; depth < Integer.MAX_VALUE; depth ++)
+        {
+            boolean destination_Bucharest = DLS(rando, depth);
+            if (destination_Bucharest == true)
+            {
+                return;
+            }
+            
+        }
+        
+    }
+    
+    public boolean DLS ( int rando, int depth ) 
+    {
+        //int depth_track = 0;
 
+        boolean visited[] = new boolean [numCity];
+        Stack<Integer> stack = new Stack<Integer>();
+        
+        System.out.println("City " + rando + " is at depth: " + depth);
+     
+        //stack.push(rando);
+        
+        if (visited[rando] == false) 
+        {
+            stack.push(rando);
+            visited[rando] = true;
+                while ( !stack.isEmpty() )
+                {
+                    int nodeIndex = stack.pop();
+                    System.out.print(nodeIndex + " ");
+                    //Grab neighbor list for nodeIndex
+                    LinkedList<Integer> nodeList = neighbours[nodeIndex];
+                    for (int i = 0; i < nodeList.size(); i++) 
+                    {
+                        int dest = nodeList.get(i);
+                        if (visited[dest] == false) 
+                        {
+                            stack.push(dest);
+                            visited[dest] = true;
+                            if (dest == 0 )
+                            {
+                                System.out.print(dest + " ");
+                                System.out.println();
+                                System.out.println("You have reached Bucharest");                                       
+                                Destination_Bucharest = true;
+                            }
+                        }
+                    }
+                }
+            }        
+        return Destination_Bucharest;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public void backtrackSteps(int[] parentArray, int start) //backtracks parentArray to print out the path taken
     {
         Stack path = new Stack(); //create a stack
@@ -147,46 +278,7 @@ public class Romania_Problem
         steps = 0;
     }
     
-    public void DFS( int rando )
-    {
-        boolean visited[] = new boolean [numCity];
-        Stack<Integer> stack = new Stack<Integer>();
-        
-        for (int startIndex = rando; startIndex < numCity; startIndex++)
-        {
-            if (visited[startIndex] == false) 
-            {
-                stack.push(startIndex);
-                visited[startIndex] = true;
-                
-                while (stack.isEmpty() == false)
-                {
-                    int nodeIndex = stack.pop();
-                    System.out.print(nodeIndex + " ");
-                    LinkedList<Integer> nodeList = neighbours[nodeIndex];
-                    for (int i = 0; i < nodeList.size(); i++) 
-                    {
-                        int dest = nodeList.get(i);
-                        if (visited[dest] == false) 
-                        {
-                           
-                            stack.push(dest);
-                            visited[dest] = true;
-                            if (dest == 0 )
-                            {
-                                System.out.print(dest + " ");
-                                System.out.println();
-                                System.out.println("You have reached Bucharest");
-                                        
-                                return;
-                               
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    
 
 
     public void printArray(int numCity)
@@ -342,16 +434,28 @@ public class Romania_Problem
         Random rand = new Random(); //random starting location
         int rando = rand.nextInt((max - min) + 1) + min;
 
-        System.out.println("BFS starting at node " + rando + ": ");
-        graph.BFS(rando, numCity); //does the BFS, sends our randomised starting location and the number of vertices (important for the visited array size)
+        System.out.println("BFS starting at node " + 9 + ": ");
+        graph.BFS(9, numCity); //does the BFS, sends our randomised starting location and the number of vertices (important for the visited array size)
         System.out.println();
         
         
         
         
         System.out.println();
-        System.out.println("DFS starting at node " + rando + ": ");
-        graph.DFS(rando);
+        System.out.println("DFS starting at node " + 9 + ": ");
+        // calls Deep First search with rando being starting location
+        graph.DFS(9);
+        System.out.println();
+        
+        
+        
+        
+        
+        
+        
+        System.out.println();
+        System.out.println("IDS starting at node " + 9 + ": ");
+        graph.IDS(9);
         
     }
 }
