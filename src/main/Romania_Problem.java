@@ -6,7 +6,6 @@
 package main;
 
 
-
 /*
 Authors: Adrien Fabian and Emerson de Lemmus
 
@@ -19,27 +18,23 @@ comment on same line as code: Adrien
 
 import java.util.*;
 
+import javax.print.attribute.standard.Destination;
+
 public class Romania_Problem
 {
-    
     int cityArray[][];
     static int min = 1; //sets minimum possible city number to 1
     static int max = 19; //sets maximum possible city number to 19
     LinkedList<Integer> neighbours[];
     static int parentArray[];
     int steps = 0;
-    int numCity;
-    
-    
+    static int numCity = 20;
     
     boolean Destination_Bucharest = false;
 
-    
-    
-    
     public Romania_Problem(int numCity)
     {
-        this.numCity = numCity;
+        //this.numCity = numCity;
         cityArray = new int[numCity][numCity]; //creates a 2D array of size numCity (20)
         neighbours = new LinkedList[numCity]; //creates a linked list with 20 nodes
         parentArray = new int[numCity]; //creates a 2D array to store each node and its parent node
@@ -59,7 +54,7 @@ public class Romania_Problem
         neighbours[from].add(to); //adds a node's neighbours, important for BFS traversal, can probably be used for DFS too
     }
 
-    public void BFS(int start, int numCity) //takes the starting city, rando in this case
+    public void BFS(int start, int numCity) //takes the starting city, rando in this case, as well as the total number of cities
     {
         boolean visited[] = new boolean[numCity]; //creates a boolean array to determine if the city was visited before
 
@@ -100,7 +95,7 @@ public class Romania_Problem
                     System.out.println();
                     stepReset();
                     
-                    
+                    /*
                     System.out.print("Child Node\t");
                     for(int k = 0; k < parentArray.length; k++) //prints each node
                     {
@@ -113,7 +108,9 @@ public class Romania_Problem
                     {
                         System.out.print(parentArray[j] + "\t");
                     }
-
+                    */
+                    
+                    resetParentArray( parentArray );
                     return;
                 }
             }
@@ -124,33 +121,44 @@ public class Romania_Problem
     {
         boolean visited[] = new boolean [numCity];
         Stack<Integer> stack = new Stack<Integer>();
-        
+        Stack<Integer> route = new Stack<Integer>();
+        assignParent( rando, rando);
     
+        System.out.print("To get to Bucharest from node " + rando + " you must pass through node(s): ");
+        
         for (int startIndex = rando; startIndex < numCity; startIndex++)
         {
             if (visited[startIndex] == false) 
             {
                 stack.push(startIndex);
                 visited[startIndex] = true;
-                
+
                 while (stack.isEmpty() == false)
                 {
+                    stepCounter();
                     int nodeIndex = stack.pop();
+                    
                     System.out.print(nodeIndex + " ");
                     LinkedList<Integer> nodeList = neighbours[nodeIndex];
                 
                     for (int i = 0; i < nodeList.size(); i++) 
                     {
                         int dest = nodeList.get(i);
+                        
                         if (visited[dest] == false) 
                         {
                             stack.push(dest);
+                            route.push(dest);
                             visited[dest] = true;
+
                             if (dest == 0 )
                             {
                                 System.out.print(dest + " ");
                                 System.out.println();
-                                System.out.println("You have reached Bucharest");                                       
+                                System.out.println("You have reached Bucharest after visiting " + (steps + 1) + " nodes/cities");
+                                
+                                System.out.println();
+                                stepReset();              
                                 return;
                             }
                         }
@@ -160,53 +168,49 @@ public class Romania_Problem
         }
     }
     
-    
-    
     //after much trial and error this is nearly identical to DFS bc it RUNS at least
     //TEST CITY = 8 (Lugoj)
-    
-    
-    
-    
-    
-    
-    
-    
     
     public void IDS ( int rando ) 
     {
         // Iterates depth from 0 -> max value held by an int data type (essentially infinity for our problem)
-        for (int depth = 0; depth < Integer.MAX_VALUE; depth ++)
+        for (int limit = 0; limit < Integer.MAX_VALUE; limit++)
         {
-            boolean destination_Bucharest = DLS(rando, depth);
+            boolean destination_Bucharest = DLS(rando, limit);
             if (destination_Bucharest == true)
             {
                 return;
             }
-            
         }
-        
     }
     
-    public boolean DLS ( int rando, int depth ) 
+    public boolean DLS (int rando, int limit) 
     {
         //int depth_track = 0;
 
         boolean visited[] = new boolean [numCity];
         Stack<Integer> stack = new Stack<Integer>();
-        
-        System.out.println("City " + rando + " is at depth: " + depth);
      
         //stack.push(rando);
+        int limiter = limit;
+        int depth = 0;
+
+        if(rando == 0)
+        {
+            return true;
+        }
         
         if (visited[rando] == false) 
         {
             stack.push(rando);
             visited[rando] = true;
-                while ( !stack.isEmpty() )
+            
+            while (!stack.isEmpty())
+            {
+                if(depth <= limiter)
                 {
                     int nodeIndex = stack.pop();
-                    System.out.print(nodeIndex + " ");
+                    System.out.println(nodeIndex + " at depth " + depth);  //comment out for all depths
                     //Grab neighbor list for nodeIndex
                     LinkedList<Integer> nodeList = neighbours[nodeIndex];
                     for (int i = 0; i < nodeList.size(); i++) 
@@ -214,52 +218,63 @@ public class Romania_Problem
                         int dest = nodeList.get(i);
                         if (visited[dest] == false) 
                         {
-                            stack.push(dest);
-                            visited[dest] = true;
+                            //stack.push(dest);
+                            //visited[dest] = true;
                             if (dest == 0 )
                             {
-                                System.out.print(dest + " ");
-                                System.out.println();
-                                System.out.println("You have reached Bucharest");                                       
+                                //System.out.print(dest + " ");
+                                //System.out.println();
+                                System.out.println("You have reached Bucharest at depth: " + depth);    
+                                //System.out.println("City " + rando + " is at depth: " + depth);                                   
                                 Destination_Bucharest = true;
+                                return Destination_Bucharest;
+                            }
+                            else
+                            {
+                                stack.push(dest);
+                                visited[dest] = true;
+                                //System.out.println(nodeIndex + " at depth " + depth); //comment out for limited depths
+                                depth++;
                             }
                         }
                     }
                 }
-            }        
+                else
+                {
+                    System.out.println("Not found at limit " + limit);
+                    return false;
+                }
+            }
+        }       
         return Destination_Bucharest;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public void backtrackSteps(int[] parentArray, int start) //backtracks parentArray to print out the path taken
     {
         Stack path = new Stack(); //create a stack
         int i = 0; //sets the starting location
+        int cityCount = 0;
+
         while(parentArray[i] != i) //pushes the path onto the stack
         {
             path.push(i);
             i = parentArray[i]; //changes the current parent/child pair to the previous one in the path
+            cityCount++;
         }
-        System.out.println();
-        System.out.print("To get to Bucharest from node " + start + " you must pass through node(s): ");
+
+        System.out.println("To get to Bucharest from node " + start + " you must pass through " + cityCount + " node(s): ");
         while(!path.isEmpty()) //continues until the stack has been emptied
         {
             Object j = path.pop(); //removes an item from the stack
             System.out.print(j + " "); //prints the item
+        }
+    }
+    
+    public void resetParentArray( int parentArray[]) //sets all values of parentArray to -1
+    {
+        for (int i = 0; i < parentArray.length; i++)
+        {
+            parentArray[i] = -1;
         }
     }
 
@@ -277,11 +292,8 @@ public class Romania_Problem
     {
         steps = 0;
     }
-    
-    
-
-
-    public void printArray(int numCity)
+   
+    public void printArray(int numCity) //prints the neighbour array, then prints out every node's neighbours
     {
         System.out.println("Adjacency Matrix:");
 
@@ -314,117 +326,207 @@ public class Romania_Problem
     {
         //List of Cities represented as integers
         // 0 = Bucharest
+        Node Bucharest = new Node ("Bucharest");
+        
         // 1 = Arad
+        Node Arad = new Node ("Arad");
+        
         // 2 = Craiova
+        Node Craiova = new Node ("Craiova");
+        
         // 3 = Drobeta
+        Node Drobeta = new Node ("Drobeta");
+        
         // 4 = Eforie
+        Node Eforie = new Node ("Eforie");
+        
         // 5 = Fagaras
+        Node Fagaras = new Node ("Fagaras");
+        
         // 6 = Giurgiu
+        Node Giurgiu = new Node ("Giurgiu");
+        
         // 7 = Hirsova
+        Node Hirsova = new Node ("Hirsova");
+        
         // 8 = Iasi
+        Node Iasi = new Node ("Iasi");
+        
         // 9 = Lugoj
+        Node Lugoj = new Node ("Lugoj");
+        
         // 10 = Mehadia
+        Node Mehadia = new Node ("Mehadia");
+        
         // 11 = Neamt
+        Node Neamt = new Node ("Neamt");
+        
         // 12 = Oradea
+        Node Oradea = new Node ("Oradea");
+        
         // 13 = Pitesti
+        Node Pitesti = new Node ("Pitesti");
+        
         // 14 = Rimnicu Vilcea
+        Node RimnicuVilcea = new Node ("RimnicuVilcea");
+        
         // 15 = Sibiu
+        Node Sibiu = new Node ("Sibiu");
+        
         // 16 = Timisoara
+        Node Timisoara = new Node ("Timisoara");
+        
         // 17 = Urziceni
+        Node Urziceni = new Node ("Urziceni");
+        
         // 18 = Vaslui
+        Node Vaslui = new Node ("Vaslui");
+        
         // 19 = Zerind
+        Node Zerind = new Node ("Zerind");
 
         // This represents number of cities (vertices) we have.
         // gets passed to Graph(int vertices)
-        int numCity = 20;
+        //I declared and initialised this as part of our class variables -Adrien
+        //int numCity = 20;
 
         // Create Graph Object
         Romania_Problem graph = new Romania_Problem(numCity);
 
         //switched Bucharest and Arad around, makes it easier for the start randomiser to do its thing -Adrien
+        
+        // NODES ARE ADDED IN ALPHABETICAL ORDER
+        
+        
         // Bucharest
+        Bucharest.addNeighbour(Fagaras);
+        Bucharest.addNeighbour(Giurgiu);
+        Bucharest.addNeighbour(Pitesti);
+        Bucharest.addNeighbour(Urziceni);
         graph.addEdge(0, 5);
         graph.addEdge(0, 6);
         graph.addEdge(0, 13);
         graph.addEdge(0, 17);
 
         // Arad
+        Arad.addNeighbour(Sibiu);
+        Arad.addNeighbour(Timisoara);
+        Arad.addNeighbour(Zerind);
         graph.addEdge(1, 15);
         graph.addEdge(1, 16);
         graph.addEdge(1, 19);
 
         // Craiova
+        Craiova.addNeighbour(Drobeta);
+        Craiova.addNeighbour(Pitesti);
+        Craiova.addNeighbour(RimnicuVilcea);
         graph.addEdge(2, 3);
         graph.addEdge(2, 13);
         graph.addEdge(2, 14);
 
         // Drobeta
+        Drobeta.addNeighbour(Craiova);
+        Drobeta.addNeighbour(Mehadia);
         graph.addEdge(3, 2);
         graph.addEdge(3, 10);
 
         // Eforie
+        Eforie.addNeighbour(Hirsova);
         graph.addEdge(4, 7);
 
         // Fagaras
+        Fagaras.addNeighbour(Bucharest);
+        Fagaras.addNeighbour(Sibiu);
         graph.addEdge(5, 0);
         graph.addEdge(5, 15);
 
         // Giurgiu
+        Giurgiu.addNeighbour(Bucharest);
         graph.addEdge(6, 0);
 
         // Hirsova
+        Hirsova.addNeighbour(Eforie);
+        Hirsova.addNeighbour(Urziceni);
         graph.addEdge(7, 4);
         graph.addEdge(7, 17);
 
         // Iasi
+        Iasi.addNeighbour(Neamt);
+        Iasi.addNeighbour(Vaslui);
         graph.addEdge(8, 11);
         graph.addEdge(8, 18);
 
         // Lugoj
+        Lugoj.addNeighbour(Mehadia);
+        Lugoj.addNeighbour(Timisoara);
         graph.addEdge(9, 10);
         graph.addEdge(9, 16);
 
         // Mehadia
+        Mehadia.addNeighbour(Drobeta);
+        Mehadia.addNeighbour(Lugoj);
         graph.addEdge(10, 3);
         graph.addEdge(10, 9);
 
         // Neamt
+        Neamt.addNeighbour(Iasi);
         graph.addEdge(11, 8);
 
         // Oradea
+        Oradea.addNeighbour(Sibiu);
+        Oradea.addNeighbour(Zerind);
         graph.addEdge(12, 15);
         graph.addEdge(12, 19);
 
         // Pitesti
+        Pitesti.addNeighbour(Bucharest);
+        Pitesti.addNeighbour(Craiova);
+        Pitesti.addNeighbour(RimnicuVilcea);
         graph.addEdge(13, 0);
         graph.addEdge(13, 2);
         graph.addEdge(13, 14);
 
         // Rimnicu Vilcea
+        RimnicuVilcea.addNeighbour(Craiova);
+        RimnicuVilcea.addNeighbour(Pitesti);
+        RimnicuVilcea.addNeighbour(Sibiu);
         graph.addEdge(14, 2);
         graph.addEdge(14, 13);
         graph.addEdge(14, 15);
 
         // Sibiu
+        Sibiu.addNeighbour(Arad);
+        Sibiu.addNeighbour(Fagaras);
+        Sibiu.addNeighbour(Oradea);
+        Sibiu.addNeighbour(RimnicuVilcea);
         graph.addEdge(15, 1);
         graph.addEdge(15, 5);
         graph.addEdge(15, 12);
         graph.addEdge(15, 14);
 
         // Timisoara
+        Timisoara.addNeighbour(Arad);
+        Timisoara.addNeighbour(Lugoj);
         graph.addEdge(16, 1);
         graph.addEdge(16, 9);
 
         // Urziceni
+        Urziceni.addNeighbour(Bucharest);
+        Urziceni.addNeighbour(Hirsova);
+        Urziceni.addNeighbour(Vaslui);
         graph.addEdge(17, 0);
         graph.addEdge(17, 7);
         graph.addEdge(17, 18);
 
         // Vaslui
+        Vaslui.addNeighbour(Iasi);
+        Vaslui.addNeighbour(Urziceni);
         graph.addEdge(18, 8);
         graph.addEdge(18, 17);
 
         // Zerind
+        Zerind.addNeighbour(Arad);
+        Zerind.addNeighbour(Oradea);
         graph.addEdge(19, 1);
         graph.addEdge(19, 12);
 
@@ -434,28 +536,21 @@ public class Romania_Problem
         Random rand = new Random(); //random starting location
         int rando = rand.nextInt((max - min) + 1) + min;
 
-        System.out.println("BFS starting at node " + 9 + ": ");
-        graph.BFS(9, numCity); //does the BFS, sends our randomised starting location and the number of vertices (important for the visited array size)
+        System.out.println("BFS starting at node " + rando + ": ");
+        graph.BFS(rando, numCity); //does the BFS, sends our randomised starting location and the number of vertices (important for the visited array size)
         System.out.println();
-        
-        
-        
-        
+
         System.out.println();
-        System.out.println("DFS starting at node " + 9 + ": ");
+        System.out.println("DFS starting at node " + rando + ": ");
         // calls Deep First search with rando being starting location
-        graph.DFS(9);
+        graph.DFS(rando);
         System.out.println();
         
-        
-        
-        
-        
-        
-        
-        System.out.println();
-        System.out.println("IDS starting at node " + 9 + ": ");
-        graph.IDS(9);
-        
+    /*    System.out.println();
+        System.out.println("IDS starting at node " + rando + ": ");
+        graph.IDS(rando);
+    */
+        IterativeDeepeningSearch IDS = new IterativeDeepeningSearch(Bucharest);
+        IDS.runIDS(Lugoj);
     }
 }
