@@ -13,10 +13,10 @@ import java.util.Stack;
  */
 public class IterativeDeepeningSearch {
     
-    private Node targetNode;
-    private Boolean isTargetFound;
+    public Node targetNode;
+    public boolean isTargetFound;
     
-    public IterativeDeepeningSearch(Node node) 
+    public IterativeDeepeningSearch(Node targetNode) 
     {
         this.targetNode = targetNode;
     }
@@ -46,7 +46,7 @@ public class IterativeDeepeningSearch {
             Node currentNode = stack.pop();
             System.out.print(currentNode + " ");
             
-            if (currentNode.getName().equals(this.targetNode.getName()))
+            if (currentNode.getCity_name().equals(this.targetNode.getCity_name()))
             {
                 System.out.println("You have reached Bucharest");
                 this.isTargetFound = true;

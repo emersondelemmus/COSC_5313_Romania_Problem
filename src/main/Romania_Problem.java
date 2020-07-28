@@ -324,66 +324,73 @@ public class Romania_Problem
 
     public static void main(String[] args)
     {
+        //Arraylist
+        ArrayList<Node> rando_Loc = new ArrayList();
+        
         //List of Cities represented as integers
         // 0 = Bucharest
         Node Bucharest = new Node ("Bucharest");
         
         // 1 = Arad
         Node Arad = new Node ("Arad");
-        
+        rando_Loc.add(Arad);
         // 2 = Craiova
         Node Craiova = new Node ("Craiova");
-        
+        rando_Loc.add(Craiova);
         // 3 = Drobeta
         Node Drobeta = new Node ("Drobeta");
-        
+        rando_Loc.add(Drobeta);
         // 4 = Eforie
         Node Eforie = new Node ("Eforie");
-        
+        rando_Loc.add(Eforie);
         // 5 = Fagaras
         Node Fagaras = new Node ("Fagaras");
-        
+        rando_Loc.add(Fagaras);
         // 6 = Giurgiu
         Node Giurgiu = new Node ("Giurgiu");
-        
+        rando_Loc.add(Giurgiu);
         // 7 = Hirsova
         Node Hirsova = new Node ("Hirsova");
-        
+        rando_Loc.add(Hirsova);
         // 8 = Iasi
         Node Iasi = new Node ("Iasi");
-        
+        rando_Loc.add(Iasi);
         // 9 = Lugoj
         Node Lugoj = new Node ("Lugoj");
-        
+        rando_Loc.add(Lugoj);
         // 10 = Mehadia
         Node Mehadia = new Node ("Mehadia");
-        
+        rando_Loc.add(Mehadia);
         // 11 = Neamt
         Node Neamt = new Node ("Neamt");
-        
+        rando_Loc.add(Neamt);
         // 12 = Oradea
         Node Oradea = new Node ("Oradea");
-        
+        rando_Loc.add(Oradea);
         // 13 = Pitesti
         Node Pitesti = new Node ("Pitesti");
-        
+        rando_Loc.add(Pitesti);
         // 14 = Rimnicu Vilcea
         Node RimnicuVilcea = new Node ("RimnicuVilcea");
-        
+        rando_Loc.add(RimnicuVilcea);
         // 15 = Sibiu
         Node Sibiu = new Node ("Sibiu");
-        
+        rando_Loc.add(Sibiu);
         // 16 = Timisoara
         Node Timisoara = new Node ("Timisoara");
-        
+        rando_Loc.add(Timisoara);
         // 17 = Urziceni
         Node Urziceni = new Node ("Urziceni");
-        
+        rando_Loc.add(Urziceni);
         // 18 = Vaslui
         Node Vaslui = new Node ("Vaslui");
-        
+        rando_Loc.add(Vaslui);
         // 19 = Zerind
         Node Zerind = new Node ("Zerind");
+        //Arraylist
+        rando_Loc.add(Zerind);
+        
+        
 
         // This represents number of cities (vertices) we have.
         // gets passed to Graph(int vertices)
@@ -426,7 +433,7 @@ public class Romania_Problem
 
         // Drobeta
         Drobeta.addNeighbour(Craiova);
-        Drobeta.addNeighbour(Mehadia);
+        //Drobeta.addNeighbour(Mehadia);
         graph.addEdge(3, 2);
         graph.addEdge(3, 10);
 
@@ -435,17 +442,17 @@ public class Romania_Problem
         graph.addEdge(4, 7);
 
         // Fagaras
-        Fagaras.addNeighbour(Bucharest);
+        //Fagaras.addNeighbour(Bucharest);
         Fagaras.addNeighbour(Sibiu);
         graph.addEdge(5, 0);
         graph.addEdge(5, 15);
 
         // Giurgiu
-        Giurgiu.addNeighbour(Bucharest);
+        //Giurgiu.addNeighbour(Bucharest);
         graph.addEdge(6, 0);
 
         // Hirsova
-        Hirsova.addNeighbour(Eforie);
+        //Hirsova.addNeighbour(Eforie);
         Hirsova.addNeighbour(Urziceni);
         graph.addEdge(7, 4);
         graph.addEdge(7, 17);
@@ -464,12 +471,12 @@ public class Romania_Problem
 
         // Mehadia
         Mehadia.addNeighbour(Drobeta);
-        Mehadia.addNeighbour(Lugoj);
+        //Mehadia.addNeighbour(Lugoj);
         graph.addEdge(10, 3);
         graph.addEdge(10, 9);
 
         // Neamt
-        Neamt.addNeighbour(Iasi);
+        //Neamt.addNeighbour(Iasi);
         graph.addEdge(11, 8);
 
         // Oradea
@@ -479,54 +486,54 @@ public class Romania_Problem
         graph.addEdge(12, 19);
 
         // Pitesti
-        Pitesti.addNeighbour(Bucharest);
-        Pitesti.addNeighbour(Craiova);
+        //Pitesti.addNeighbour(Bucharest);
+        //Pitesti.addNeighbour(Craiova);
         Pitesti.addNeighbour(RimnicuVilcea);
         graph.addEdge(13, 0);
         graph.addEdge(13, 2);
         graph.addEdge(13, 14);
 
         // Rimnicu Vilcea
-        RimnicuVilcea.addNeighbour(Craiova);
-        RimnicuVilcea.addNeighbour(Pitesti);
+        //RimnicuVilcea.addNeighbour(Craiova);
+        //RimnicuVilcea.addNeighbour(Pitesti);
         RimnicuVilcea.addNeighbour(Sibiu);
         graph.addEdge(14, 2);
         graph.addEdge(14, 13);
         graph.addEdge(14, 15);
 
         // Sibiu
-        Sibiu.addNeighbour(Arad);
-        Sibiu.addNeighbour(Fagaras);
-        Sibiu.addNeighbour(Oradea);
-        Sibiu.addNeighbour(RimnicuVilcea);
+        //Sibiu.addNeighbour(Arad);
+        //Sibiu.addNeighbour(Fagaras);
+        //Sibiu.addNeighbour(Oradea);
+        //Sibiu.addNeighbour(RimnicuVilcea);
         graph.addEdge(15, 1);
         graph.addEdge(15, 5);
         graph.addEdge(15, 12);
         graph.addEdge(15, 14);
 
         // Timisoara
-        Timisoara.addNeighbour(Arad);
-        Timisoara.addNeighbour(Lugoj);
+        //Timisoara.addNeighbour(Arad);
+        //Timisoara.addNeighbour(Lugoj);
         graph.addEdge(16, 1);
         graph.addEdge(16, 9);
 
         // Urziceni
-        Urziceni.addNeighbour(Bucharest);
-        Urziceni.addNeighbour(Hirsova);
+        //Urziceni.addNeighbour(Bucharest);
+        //Urziceni.addNeighbour(Hirsova);
         Urziceni.addNeighbour(Vaslui);
         graph.addEdge(17, 0);
         graph.addEdge(17, 7);
         graph.addEdge(17, 18);
 
         // Vaslui
-        Vaslui.addNeighbour(Iasi);
+        //Vaslui.addNeighbour(Iasi);
         Vaslui.addNeighbour(Urziceni);
         graph.addEdge(18, 8);
         graph.addEdge(18, 17);
 
         // Zerind
-        Zerind.addNeighbour(Arad);
-        Zerind.addNeighbour(Oradea);
+        //Zerind.addNeighbour(Arad);
+        //Zerind.addNeighbour(Oradea);
         graph.addEdge(19, 1);
         graph.addEdge(19, 12);
 
@@ -550,7 +557,9 @@ public class Romania_Problem
         System.out.println("IDS starting at node " + rando + ": ");
         graph.IDS(rando);
     */
+        
+        
         IterativeDeepeningSearch IDS = new IterativeDeepeningSearch(Bucharest);
-        IDS.runIDS(Lugoj);
+        IDS.runIDS(rando_Loc.get(rando));
     }
 }

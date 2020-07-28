@@ -5,7 +5,8 @@
  */
 package main;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,9 +14,9 @@ import java.util.*;
  */
 public class Node {
     
-    private String city_name;
-    private int depth_Level = 0;
-    private List<Node> adjacenciesList;
+    public String city_name;
+    public int depth_Level = 0;
+    public List<Node> adjacenciesList;
     
     public Node(String city_name)
     {
@@ -23,22 +24,17 @@ public class Node {
         this.adjacenciesList = new ArrayList<>();
     }
     
-    public String toString()
-    {
-        return this.city_name;      
-    }
-    
     public void addNeighbour (Node node)
     {
         this.adjacenciesList.add(node);
     }
 
-    public String getName() {
+    public String getCity_name() {
         return city_name;
     }
 
-    public void setName(String name) {
-        this.city_name = name;
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
     }
 
     public int getDepth_Level() {
@@ -57,7 +53,13 @@ public class Node {
         this.adjacenciesList = adjacenciesList;
     }
     
-   
     
     
+    public String toString()
+    {
+        return this.city_name;      
+    }
+    
+    
+
 }
