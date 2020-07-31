@@ -10,8 +10,13 @@ import java.util.List;
 
 /**
  *
- * @author cecilia
+ * @author Emerson de Lemmus, Adrien Fabian
  */
+
+// Class node consists of auto generated Getters and Setters for the following items:
+// City Names
+// Adjacency Lists (Neighbour lists)
+// and depth_level
 public class Node {
     
     public String city_name;
